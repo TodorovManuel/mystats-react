@@ -1,0 +1,19 @@
+.playerContainer {
+    display: flex;
+    flex-direction: row;
+}
+.playerText {
+    display: flex;
+    flex-direction: column;
+}
+.detailCont {
+    display: flex;
+    flex-direction: row;
+    margin-left: 20px;
+}
+
+.moreDetailCont {
+    display: flex;
+    flex-direction: row;
+    margin-left: 20px;
+}

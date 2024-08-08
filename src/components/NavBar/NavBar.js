@@ -78,10 +78,30 @@ const Navbar = () => {
           <div className="contenido-popup">
             <h2>Registrate</h2>
             <form>
-              <label>Correo</label>
+              <div className='registerDiv'>
+                <label>Información personal</label>
+                <div id='infoPlayer'>
+              <input type="text" placeholder="Nombre" />
+              <input type="email" placeholder="Apellido" />
+              <input type="date" placeholder="Fecha de nacimiento" />
+              <input type="number" placeholder="Altura " />
+              <input type="number" placeholder="Peso " />
+              </div>
+              </div>
+              <div className='registerDiv'>
+                <label>Información de jugador</label>
+                <div>
+                <input type="text" placeholder="Club " />
+                <input type="number" placeholder="Dorsal " />
+              </div>
+              </div>
+              <div className='registerDiv'>
+                <label>Información de cuenta</label>
+                <div>
               <input type="email" placeholder="Correo" />
-              <label>Contraseña</label>
               <input type="password" placeholder="Contraseña" />
+              </div>
+              </div>
               <button className='finishBtn'>Registrarme</button>
             </form>
             <button className='cerrarBtn' onClick={closePopUpRegistro}><img width="50" height="50" src="https://img.icons8.com/ios/50/FA5252/close-window--v1.png" alt="close-window--v1"/></button>

@@ -98,6 +98,22 @@ nav button {
   background-color: #574c4c;
 }
 
+.registerDiv {
+  display: flex;
+  flex-direction: column;
+}
+.registerDiv div {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+#infoPlayer input{
+  width: 85px;
+  margin: 3.3px;
+}
+
+
 @media (max-width: 768px) {
   .nav-elements ul li:not(:last-child) {
     margin-right: 30px;
