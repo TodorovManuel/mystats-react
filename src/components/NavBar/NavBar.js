@@ -29,6 +29,92 @@ const Navbar = () => {
     setPopUpOpenLogin(false);
   };
 
+  const [nombre, setNombre] = useState('');
+  const [apellido, setApellido] = useState('');
+  const [nacimiento, setNacimiento] = useState('');
+  const [altura, setAltura] = useState('');
+  const [peso, setPeso] = useState('');
+  const [club, setClub] = useState('');
+  const [dorsal, setDorsal] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    const data = {
+      usuarios: {
+        id: 1,  // Este es opcional si el backend lo genera automáticamente
+        email: email,
+        password: password,
+        created: new Date().toISOString(),
+        jugador: {
+          id: 1,  // Este también es opcional si el backend lo genera automáticamente
+          nombre: nombre,
+          apellido: apellido,
+          nacimiento: new Date(nacimiento).toISOString(),
+          club: club,
+          dorsal: parseInt(dorsal),
+          altura: parseInt(altura),
+          peso: parseInt(peso),
+          partidos: {}
+        }
+      }
+    };
+    
+
+    fetch('http://localhost:3000/api/usuarios/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Success:', data);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+  };
+
+  const [emailLogin, setEmailLogin] = useState('');
+  const [passwordLogin, setPasswordLogin] = useState('');
+  const handleSubmitLog = async (event) => {
+    event.preventDefault();
+  
+    const data = {
+      usuarios: {
+        email: emailLogin,
+        password: passwordLogin
+      }
+    };
+  
+    try {
+      const response = await fetch('http://localhost:3000/api/usuarios/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+  
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error('Error en la respuesta:', errorData);
+        throw new Error('Error en la solicitud');
+      }
+  
+      const result = await response.json();
+      console.log('Resultado del login:', result);
+  
+    } catch (error) {
+      console.error('Error al enviar los datos:', error);
+    }
+  };
+  
+  
   return (
     <nav className="navbar">
       <div className="container">
@@ -59,13 +145,23 @@ const Navbar = () => {
         <div className="ventana-popup">
           <div className="contenido-popup">
             <h2>Inicia Sesión</h2>
-            <form>
-              <label>Correo</label>
-              <input type="email" placeholder="Correo" />
-              <label>Contraseña</label>
-              <input type="password" placeholder="Contraseña" />
-              <button className='finishBtn'>Login</button>
-            </form>
+            <form onSubmit={handleSubmitLog}>
+      <label>Correo</label>
+      <input
+        type="email"
+        placeholder="Correo"
+        value={emailLogin}
+        onChange={(e) => setEmailLogin(e.target.value)} // Actualizar el estado al cambiar el valor
+      />
+      <label>Contraseña</label>
+      <input
+        type="password"
+        placeholder="Contraseña"
+        value={passwordLogin}
+        onChange={(e) => setPasswordLogin(e.target.value)} // Actualizar el estado al cambiar el valor
+      />
+      <button className='finishBtn' type="submit">Login</button>
+    </form>
             <button className='cerrarBtn' onClick={closePopUpLogin}><img width="50" height="50" src="https://img.icons8.com/ios/50/FA5252/close-window--v1.png" alt="close-window--v1"/></button>
           </div>
         </div>
@@ -77,33 +173,33 @@ const Navbar = () => {
         <div className="ventana-popup">
           <div className="contenido-popup">
             <h2>Registrate</h2>
-            <form>
-              <div className='registerDiv'>
-                <label>Información personal</label>
-                <div id='infoPlayer'>
-              <input type="text" placeholder="Nombre" />
-              <input type="email" placeholder="Apellido" />
-              <input type="date" placeholder="Fecha de nacimiento" />
-              <input type="number" placeholder="Altura " />
-              <input type="number" placeholder="Peso " />
-              </div>
-              </div>
-              <div className='registerDiv'>
-                <label>Información de jugador</label>
-                <div>
-                <input type="text" placeholder="Club " />
-                <input type="number" placeholder="Dorsal " />
-              </div>
-              </div>
-              <div className='registerDiv'>
-                <label>Información de cuenta</label>
-                <div>
-              <input type="email" placeholder="Correo" />
-              <input type="password" placeholder="Contraseña" />
-              </div>
-              </div>
-              <button className='finishBtn'>Registrarme</button>
-            </form>
+            <form onSubmit={handleSubmit}>
+      <div className='registerDiv'>
+        <label>Información personal</label>
+        <div id='infoPlayer'>
+          <input type="text" placeholder="Nombre" value={nombre} onChange={(e) => setNombre(e.target.value)} />
+          <input type="text" placeholder="Apellido" value={apellido} onChange={(e) => setApellido(e.target.value)} />
+          <input type="date" placeholder="Fecha de nacimiento" value={nacimiento} onChange={(e) => setNacimiento(e.target.value)} />
+          <input type="number" placeholder="Altura" value={altura} onChange={(e) => setAltura(e.target.value)} />
+          <input type="number" placeholder="Peso" value={peso} onChange={(e) => setPeso(e.target.value)} />
+        </div>
+      </div>
+      <div className='registerDiv'>
+        <label>Información de jugador</label>
+        <div>
+          <input type="text" placeholder="Club" value={club} onChange={(e) => setClub(e.target.value)} />
+          <input type="number" placeholder="Dorsal" value={dorsal} onChange={(e) => setDorsal(e.target.value)} />
+        </div>
+      </div>
+      <div className='registerDiv'>
+        <label>Información de cuenta</label>
+        <div>
+          <input type="email" placeholder="Correo" value={email} onChange={(e) => setEmail(e.target.value)} />
+          <input type="password" placeholder="Contraseña" value={password} onChange={(e) => setPassword(e.target.value)} />
+        </div>
+      </div>
+      <button className='finishBtn' type="submit">Registrarme</button>
+    </form>
             <button className='cerrarBtn' onClick={closePopUpRegistro}><img width="50" height="50" src="https://img.icons8.com/ios/50/FA5252/close-window--v1.png" alt="close-window--v1"/></button>
           </div>
         </div>
