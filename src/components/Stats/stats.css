@@ -1,7 +1,8 @@
 .playerContainer {
     width: 100%;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
+    align-items: center;
     flex-direction: row;
 }
 
@@ -56,18 +57,32 @@
     justify-content: center;
     align-items: center;
     background-color: rgb(238, 238, 238);
-    padding: 10px;
+    padding: 2  0px;
     width: 150px;
     text-align: center;
 }
-.statsColumn p {
-    margin: 0;
-    font-size: 40px;
+.statsDivTitle {
+    font-size: 20px;
+    font-weight: bold;
 }
-.lowFile p{
-    padding-bottom: 35px;
+.statsDivInfo {
+    font-size: 20px;
+    border-radius: 100%;
+    border: 1px solid black;
+    padding: 15px;
 }
-.topColumn div {
+
+.lowRow p {
+    margin-bottom: 25px;
+}
+.lowRow {
+    border-bottom: solid 1px red transparent;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    margin-bottom: 20px;
+}
+.topRow div {
+    margin-top: 50px;
     border-top: 6px solid #920000;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
