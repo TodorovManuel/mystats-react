@@ -166,14 +166,14 @@ const Navbar = () => {
   const [passwordLogin, setPasswordLogin] = useState('');
   const handleSubmitLog = async (event) => {
     event.preventDefault();
-
+  
     const data = {
       usuarios: {
         email: emailLogin,
         password: passwordLogin
       }
     };
-
+  
     try {
       const response = await fetch('http://localhost:3000/api/usuarios/login', {
         method: 'POST',
@@ -182,16 +182,17 @@ const Navbar = () => {
         },
         body: JSON.stringify(data)
       });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.error('Error en la respuesta:', errorData);
-        throw new Error('Error en la solicitud');
-      }
-
+  
       const result = await response.json();
-      console.log('Resultado del login:', result);
-
+      console.log('Response from backend:', result); // Verifica la respuesta del backend
+  
+      if (result.token) {
+        localStorage.setItem('token', result.token.token);
+        console.log('Token guardado:', result.token.token);
+      } else {
+        console.error('Error en el login, token no recibido');
+      }
+  
     } catch (error) {
       console.error('Error al enviar los datos:', error);
     }
