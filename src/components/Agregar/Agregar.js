@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import NavBar from "../NavBar/NavBar";
 import './agregar.css';                                                                                                                  
 const Agregar = () => {
-
     const [formData, setFormData] = useState({
         equipoRival: '',
         fecha: '',
@@ -32,10 +31,10 @@ const Agregar = () => {
     });
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
+        const { name, value, type } = e.target;
         setFormData({
             ...formData,
-            [name]: value
+            [name]: type === 'number' ? Number(value) : value
         });
     };
 
@@ -43,50 +42,53 @@ const Agregar = () => {
         e.preventDefault();
     
         const partidoData = {
-            id: 1, // Esto podrías generarlo dinámicamente
-            fecha: formData.fecha,
-            adversario: formData.equipoRival,
-            puntosPropioClub: formData.puntosFavor,
-            puntosAdversario: formData.puntosContra,
-            estadisticas: {
-                minutosJugados: formData.minutosJugados,
-                segundosJugados: formData.segundosJugados,
-                puntos: formData.puntosConvertidos,
-                rebotesOfensivos: formData.rebotesOfensivos,
-                rebotesDefensivos: formData.rebotesDefensivos,
-                asistencias: formData.asistencias,
-                faltasCometidas: formData.faltasCometidas,
-                faltasRecibidas: formData.faltasRecibidas,
-                taponesRecibidos: formData.taponesRecibidos,
-                taponesRealizados: formData.taponesCometidos,
-                perdidas: formData.balonesPerdidos,
-                recuperaciones: formData.recuperaciones,
-                valoracion: formData.valoracion,
-                tiros: {
-                    tirosDeCampo: formData.tirosDeCampo,
-                    tirosDeCampoConvertidos: formData.tirosDeCampoConvertidos,
-                    tirosDeDos: formData.tirosDeDos,
-                    tirosDeDosConvertidos: formData.tirosDeDosConvertidos,
-                    tirosDeTres: formData.tirosDeTres,
-                    tirosDeTresConvertidos: formData.tirosDeTresConvertidos,
-                    tirosLibres: formData.tirosLibres,
-                    tirosLibresConvertidos: formData.tirosLibresConvertidos
+            partidos: {
+                id: 1,
+                fecha: formData.fecha,
+                adversario: formData.equipoRival,
+                puntosPropioClub: formData.puntosFavor,
+                puntosAdversario: formData.puntosContra,
+                estadisticas: {
+                    minutosJugados: formData.minutosJugados,
+                    segundosJugados: formData.segundosJugados,
+                    puntos: formData.puntosConvertidos,
+                    rebotesOfensivos: formData.rebotesOfensivos,
+                    rebotesDefensivos: formData.rebotesDefensivos,
+                    asistencias: formData.asistencias,
+                    faltasCometidas: formData.faltasCometidas,
+                    faltasRecibidas: formData.faltasRecibidas,
+                    taponesRecibidos: formData.taponesRecibidos,
+                    taponesCometidos: formData.taponesCometidos,
+                    perdidas: formData.balonesPerdidos,
+                    recuperaciones: formData.recuperaciones,
+                    valoracion: formData.valoracion,
+                    tiros: {
+                        tirosDeCampo: formData.tirosDeCampo,
+                        tirosDeCampoConvertidos: formData.tirosDeCampoConvertidos,
+                        tirosDeDos: formData.tirosDeDos,
+                        tirosDeDosConvertidos: formData.tirosDeDosConvertidos,
+                        tirosDeTres: formData.tirosDeTres,
+                        tirosDeTresConvertidos: formData.tirosDeTresConvertidos,
+                        tirosLibres: formData.tirosLibres,
+                        tirosLibresConvertidos: formData.tirosLibresConvertidos
+                    }
                 }
             }
         };
     
-        const token = localStorage.getItem('token'); // O usa sessionStorage o un estado
-        console.log( JSON.stringify(partidoData));
+        const token = localStorage.getItem('token');
+        console.log(JSON.stringify(partidoData));
         try {
             const response = await fetch('http://localhost:3000/api/usuarios/agregarPartido', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}` // Incluir el token aquí
+                    'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify(partidoData),
             });
             console.log('response', response);
+            
             if (response.ok) {
                 const data = await response.json();
                 console.log('Partido agregado con éxito:', data);
@@ -98,7 +100,6 @@ const Agregar = () => {
             console.error('Error en la solicitud:', error);
         }
     };
-    
 
     return (
         <div>

@@ -73,7 +73,7 @@ const Navbar = () => {
               faltasCometidas: 0,
               faltasRecibidas: 0,
               taponesRecibidos: 0,
-              taponesRealizados: 0,
+              taponesCometidos: 0,
               perdidas: 0,
               recuperaciones: 0,
               valoracion: 0,
@@ -105,8 +105,8 @@ const Navbar = () => {
       .then(data => {
         console.log('Response from backend:', data); // Verifica la respuesta del backend
         if (data.token) {
-          localStorage.setItem('token', data.token);
-          console.log('Token guardado:', data.token);
+          localStorage.setItem('token', data.token.token);
+          console.log('Token guardado:', data.token.token);
         } else {
           console.error('Error en el registro, token no recibido');
         }
@@ -228,8 +228,8 @@ const Navbar = () => {
               {isPopupOpenLogin && (
                 <div className="ventana-popup">
                   <div className="contenido-popup">
-                    <h2>Inicia Sesión</h2>
                     <form onSubmit={handleSubmitLog}>
+                    <h2>Inicia Sesión</h2>
                       <label>Correo</label>
                       <input
                         type="email"
@@ -244,9 +244,12 @@ const Navbar = () => {
                         value={passwordLogin}
                         onChange={(e) => setPasswordLogin(e.target.value)} // Actualizar el estado al cambiar el valor
                       />
-                      <button className='finishBtn' type="submit">Login</button>
+                      <div className='formBtnContainer'>
+                      <button onClick={closePopUpLogin} className='finishBtn' type="submit">Login</button>
+                      <button className='cerrarBtn' onClick={closePopUpLogin}><img width="50" height="50" src="https://img.icons8.com/ios/50/FA5252/close-window--v1.png" alt="close-window--v1" /></button>
+                      </div>
+                      
                     </form>
-                    <button className='cerrarBtn' onClick={closePopUpLogin}><img width="50" height="50" src="https://img.icons8.com/ios/50/FA5252/close-window--v1.png" alt="close-window--v1" /></button>
                   </div>
                 </div>
               )}
@@ -256,8 +259,9 @@ const Navbar = () => {
               {isPopupOpenRegistro && (
                 <div className="ventana-popup">
                   <div className="contenido-popup">
-                    <h2>Registrate</h2>
+                    
                     <form onSubmit={handleSubmit}>
+                    <h2>Registrate</h2>
                       <div className='registerDiv'>
                         <label>Información personal</label>
                         <div id='infoPlayer'>
@@ -282,9 +286,11 @@ const Navbar = () => {
                           <input type="password" placeholder="Contraseña" value={password} onChange={(e) => setPassword(e.target.value)} />
                         </div>
                       </div>
-                      <button className='finishBtn' type="submit">Registrarme</button>
+                      <div className='formBtnContainer'>
+                      <button className='finishBtn' type="submit" onClick={closePopUpRegistro} >Registrarme</button>
+                      <button className='cerrarBtn' onClick={closePopUpRegistro}><img width="50" height="50" src="https://img.icons8.com/ios/50/FA5252/close-window--v1.png" alt="close-window--v1" /></button>
+                      </div>
                     </form>
-                    <button className='cerrarBtn' onClick={closePopUpRegistro}><img width="50" height="50" src="https://img.icons8.com/ios/50/FA5252/close-window--v1.png" alt="close-window--v1" /></button>
                   </div>
                 </div>
               )}
