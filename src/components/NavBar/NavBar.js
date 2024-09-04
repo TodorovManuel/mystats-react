@@ -287,7 +287,7 @@ const Navbar = () => {
                         </div>
                       </div>
                       <div className='formBtnContainer'>
-                      <button className='finishBtn' type="submit" onClick={closePopUpRegistro} >Registrarme</button>
+                      <button className='finishBtn' type="submit" /*onClick={closePopUpRegistro}*/ >Registrarme</button>
                       <button className='cerrarBtn' onClick={closePopUpRegistro}><img width="50" height="50" src="https://img.icons8.com/ios/50/FA5252/close-window--v1.png" alt="close-window--v1" /></button>
                       </div>
                     </form>

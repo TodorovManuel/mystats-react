@@ -83,8 +83,8 @@ const Stats = () => {
             .catch(error => console.error('Error fetching data:', error));
     }
     , []);
-    console.log(datosUser.nacimiento.split('T')[0]);
-    datosUser.nacimiento = datosUser.nacimiento.split('T')[0];
+   // console.log(datosUser.nacimiento.split('T')[0]);
+   // datosUser.nacimiento = datosUser.nacimiento.split('T')[0];
   return (
     <div>
       <NavBar />
