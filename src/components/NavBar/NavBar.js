@@ -41,7 +41,7 @@ const Navbar = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     const data = {
       usuarios: {
         id: 1,  // Este es opcional si el backend lo genera automáticamente
@@ -63,7 +63,7 @@ const Navbar = () => {
             adversario: "",
             puntosPropioClub: 0,
             puntosAdversario: 0,
-            estadisticas:{
+            estadisticas: {
               minutosJugados: 0,
               segundosJugados: 0,
               puntos: 0,
@@ -77,22 +77,22 @@ const Navbar = () => {
               perdidas: 0,
               recuperaciones: 0,
               valoracion: 0,
-              tiros:{
-                tirosDeCampo:0,
-                tirosDeCampoConvertidos:0,
-                tirosDeDos:0,
-                tirosDeDosConvertidos:0,
-                tirosDeTres:0,
-                tirosDeTresConvertidos:0,
-                tirosLibres:0,
-                tirosLibresConvertidos:0
+              tiros: {
+                tirosDeCampo: 0,
+                tirosDeCampoConvertidos: 0,
+                tirosDeDos: 0,
+                tirosDeDosConvertidos: 0,
+                tirosDeTres: 0,
+                tirosDeTresConvertidos: 0,
+                tirosLibres: 0,
+                tirosLibresConvertidos: 0
               }
             }
           }
         }
       }
     };
-    
+
 
     fetch('http://localhost:3000/api/usuarios/register', {
       method: 'POST',
@@ -101,7 +101,7 @@ const Navbar = () => {
       },
       body: JSON.stringify(data),
     })
-    .then(response => response.json())
+      .then(response => response.json())
       .then(data => {
         console.log('Response from backend:', data); // Verifica la respuesta del backend
         if (data.token) {
@@ -116,64 +116,20 @@ const Navbar = () => {
       });
   };
 
-  /*const handleSubmit = (e) => {
-    e.preventDefault();
-
-    const data = {
-      usuarios: {  // Cambiado de 'usuarios' a 'usuario' para reflejar el cambio en el backend
-        email: email,
-        password: password,
-        jugador: {
-          nombre: nombre,
-          apellido: apellido,
-          nacimiento: new Date(nacimiento).toISOString(),
-          club: club,
-          dorsal: parseInt(dorsal),
-          altura: parseInt(altura),
-          peso: parseInt(peso),
-          partidos: []
-        }
-      }
-    };
-
-    console.log('Data to send:', data);  // Verifica los datos a enviar
-
-    fetch('http://localhost:3000/api/usuarios/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Response from backend:', data); // Verifica la respuesta del backend
-        if (data.token) {
-          localStorage.setItem('token', data.token);
-          console.log('Token guardado:', data.token);
-        } else {
-          console.error('Error en el registro, token no recibido');
-        }
-      })
-      .catch((error) => {
-        console.error('Error en la solicitud:', error);  // Verifica el error de la solicitud
-      });
-
-  };*/
 
 
   const [emailLogin, setEmailLogin] = useState('');
   const [passwordLogin, setPasswordLogin] = useState('');
   const handleSubmitLog = async (event) => {
     event.preventDefault();
-  
+
     const data = {
       usuarios: {
         email: emailLogin,
         password: passwordLogin
       }
     };
-  
+
     try {
       const response = await fetch('http://localhost:3000/api/usuarios/login', {
         method: 'POST',
@@ -182,21 +138,43 @@ const Navbar = () => {
         },
         body: JSON.stringify(data)
       });
-  
+
       const result = await response.json();
       console.log('Response from backend:', result); // Verifica la respuesta del backend
-  
+
       if (result.token) {
         localStorage.setItem('token', result.token.token);
         console.log('Token guardado:', result.token.token);
       } else {
         console.error('Error en el login, token no recibido');
       }
-  
+
     } catch (error) {
       console.error('Error al enviar los datos:', error);
     }
   };
+
+  const [federacion, setFederacion] = useState('');
+  const [equipos, setEquipos] = useState([]);
+
+  // Función que maneja el cambio de federación
+  const actualizarEquipos = (federacionSeleccionada) => {
+    let nuevosEquipos = [];
+
+    // Según la federación seleccionada, actualizamos los equipos disponibles
+    if (federacionSeleccionada === 'femenina') {
+      nuevosEquipos = ['17 de Agosto', 'Comunicaciones', 'Jose Hernandez', 'San Vicente', 'Boca Juniors', 'Burzaco', 'Derqui', 'Centro Galicia', 'Lanús', 'Banco Provincia', 'Obras', 'Pampero', 'Velez Sarfield', 'El talar', 'Ferro', 'Harrods', 'Escobar', 'Defensores de Hurlingam', 'Sunderland'];
+    } else if (federacionSeleccionada === 'masculinaCABA') {
+      nuevosEquipos = ['Pinocho', 'Arquitectura', '17 de Agosto', 'APB', 'Quilmes', 'Banco Provincia', 'Bernal', 'Boca Juniors', 'Derqui', 'Circulo Urquiza', 'Ciudad de Buenos Aires', '3 de Febrero', 'Colegiales', 'Comunicaciones', 'Ferro', 'GEBA', 'GEVP', 'Huracan', 'Imperio', 'Buchardo', 'Obras', 'Nueva chicago', 'Olimpo', 'Platense', 'Racing Club', 'River', 'San Fernando', 'Temperley', 'UBA', 'Velez Sarfield', 'Villa Mitre'];
+    } else if (federacionSeleccionada === 'masculinaPBA') {
+      nuevosEquipos = ['San Martín de Junín', 'Defensores De Zarate', 'Atenas La plata', 'Atletico argentino Pergamino', 'Sacachispas San Nicolás', 'Banco provincia la plata', 'Belgrano de San Nicolas', 'Comunicaciones Pergamino', 'Costa brava', 'Estudiantes de la Plata', 'Independiente de Tandil', 'Regatas de San Nicolás', 'Somisa', 'Racing Olavarría'];
+    }
+
+    // Actualizamos el estado de los equipos
+    setEquipos(nuevosEquipos);
+    setFederacion(federacionSeleccionada);
+  };
+
 
 
   return (
@@ -229,7 +207,7 @@ const Navbar = () => {
                 <div className="ventana-popup">
                   <div className="contenido-popup">
                     <form onSubmit={handleSubmitLog}>
-                    <h2>Inicia Sesión</h2>
+                      <h2>Inicia Sesión</h2>
                       <label>Correo</label>
                       <input
                         type="email"
@@ -245,10 +223,10 @@ const Navbar = () => {
                         onChange={(e) => setPasswordLogin(e.target.value)} // Actualizar el estado al cambiar el valor
                       />
                       <div className='formBtnContainer'>
-                      <button onClick={closePopUpLogin} className='finishBtn' type="submit">Login</button>
-                      <button className='cerrarBtn' onClick={closePopUpLogin}><img width="50" height="50" src="https://img.icons8.com/ios/50/FA5252/close-window--v1.png" alt="close-window--v1" /></button>
+                        <button onClick={closePopUpLogin} className='finishBtn' type="submit">Login</button>
+                        <button className='cerrarBtn' onClick={closePopUpLogin}><img width="50" height="50" src="https://img.icons8.com/ios/50/FA5252/close-window--v1.png" alt="close-window--v1" /></button>
                       </div>
-                      
+
                     </form>
                   </div>
                 </div>
@@ -259,9 +237,9 @@ const Navbar = () => {
               {isPopupOpenRegistro && (
                 <div className="ventana-popup">
                   <div className="contenido-popup">
-                    
+
                     <form onSubmit={handleSubmit}>
-                    <h2>Registrate</h2>
+                      <h2>Registrate</h2>
                       <div className='registerDiv'>
                         <label>Información personal</label>
                         <div id='infoPlayer'>
@@ -275,7 +253,38 @@ const Navbar = () => {
                       <div className='registerDiv'>
                         <label>Información de jugador</label>
                         <div>
-                          <input type="text" placeholder="Club" value={club} onChange={(e) => setClub(e.target.value)} />
+                          <select
+                            id="federacion"
+                            name="federacion"
+                            value={federacion}
+                            onChange={(e) => actualizarEquipos(e.target.value)}
+                          >
+                            <option value="">--Selecciona una federación--</option>
+                            <option value="femenina">Federación Femenina</option>
+                            <option value="masculinaCABA">Federación Masculina CABA</option>
+                            <option value="masculinaPBA">Federación Masculina PBA</option>
+                          </select>
+
+                          <select
+                            id="equipo" 
+                            name="equipo"
+                            value={club}  // Vincula el valor del select con el estado 'club'
+                            onChange={(e) => setClub(e.target.value)}  // Actualiza el estado 'club' cuando se cambia el valor
+                          >
+                            <option value="">--Selecciona un equipo--</option>
+                            {equipos.length > 0 ? (
+                              equipos.map((equipo, index) => (
+                                <option key={index} value={equipo.toLowerCase().replace(/\s+/g, '_')}>
+                                  {equipo}
+                                </option>
+                              ))
+                            ) : (
+                              <option value="">--Selecciona una federación primero--</option>
+                            )}
+                          </select>
+
+
+                          {/* <input type="text" placeholder="Club" value={club} onChange={(e) => setClub(e.target.value)} /> */}
                           <input type="number" placeholder="Dorsal" value={dorsal} onChange={(e) => setDorsal(e.target.value)} />
                         </div>
                       </div>
@@ -287,8 +296,8 @@ const Navbar = () => {
                         </div>
                       </div>
                       <div className='formBtnContainer'>
-                      <button className='finishBtn' type="submit" /*onClick={closePopUpRegistro}*/ >Registrarme</button>
-                      <button className='cerrarBtn' onClick={closePopUpRegistro}><img width="50" height="50" src="https://img.icons8.com/ios/50/FA5252/close-window--v1.png" alt="close-window--v1" /></button>
+                        <button className='finishBtn' type="submit" /*onClick={closePopUpRegistro}*/ >Registrarme</button>
+                        <button className='cerrarBtn' onClick={closePopUpRegistro}><img width="50" height="50" src="https://img.icons8.com/ios/50/FA5252/close-window--v1.png" alt="close-window--v1" /></button>
                       </div>
                     </form>
                   </div>
