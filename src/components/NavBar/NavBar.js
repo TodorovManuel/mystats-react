@@ -165,7 +165,7 @@ const Navbar = () => {
     if (federacionSeleccionada === 'femenina') {
       nuevosEquipos = ['17 de Agosto', 'Comunicaciones', 'Jose Hernandez', 'San Vicente', 'Boca Juniors', 'Burzaco', 'Derqui', 'Centro Galicia', 'Lanús', 'Banco Provincia', 'Obras', 'Pampero', 'Velez Sarfield', 'El talar', 'Ferro', 'Harrods', 'Escobar', 'Defensores de Hurlingam', 'Sunderland'];
     } else if (federacionSeleccionada === 'masculinaCABA') {
-      nuevosEquipos = ['Pinocho', 'Arquitectura', '17 de Agosto', 'APB', 'Quilmes', 'Banco Provincia', 'Bernal', 'Boca Juniors', 'Derqui', 'Circulo Urquiza', 'Ciudad de Buenos Aires', '3 de Febrero', 'Colegiales', 'Comunicaciones', 'Ferro', 'GEBA', 'GEVP', 'Huracan', 'Imperio', 'Buchardo', 'Obras', 'Nueva chicago', 'Olimpo', 'Platense', 'Racing Club', 'River', 'San Fernando', 'Temperley', 'UBA', 'Velez Sarfield', 'Villa Mitre'];
+      nuevosEquipos = ['Pinocho', 'Arquitectura', '17 de Agosto', 'APV', 'Quilmes', 'Banco Provincia', 'Bernal', 'Boca Juniors', 'Derqui', 'Circulo Urquiza', 'Ciudad de Buenos Aires', '3 de Febrero', 'Colegiales', 'Comunicaciones', 'Ferro', 'GEBA', 'GEVP', 'Huracan', 'Imperio', 'Buchardo', 'Obras', 'Nueva chicago', 'Olimpo', 'Platense', 'Racing Club', 'River', 'San Fernando', 'Temperley', 'UBA', 'Velez Sarfield', 'Villa Mitre'];
     } else if (federacionSeleccionada === 'masculinaPBA') {
       nuevosEquipos = ['San Martín de Junín', 'Defensores De Zarate', 'Atenas La plata', 'Atletico argentino Pergamino', 'Sacachispas San Nicolás', 'Banco provincia la plata', 'Belgrano de San Nicolas', 'Comunicaciones Pergamino', 'Costa brava', 'Estudiantes de la Plata', 'Independiente de Tandil', 'Regatas de San Nicolás', 'Somisa', 'Racing Olavarría'];
     }
