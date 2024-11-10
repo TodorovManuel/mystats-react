@@ -169,7 +169,7 @@ const Navbar = () => {
         })
           .then((response) => response.json())
           .then((data) => {
-            console.log("Response from backend:", data); // Verifica la respuesta del backend
+            console.log("Response from backend:", data); // Verifica la respuesta del backendy
             if (data.length !== 0) {
               nuevosEquipos = data.federaciones;
               console.log("Equipos:", nuevosEquipos);
@@ -393,12 +393,7 @@ const Navbar = () => {
                             <option value="">--Selecciona un equipo--</option>
                             {equipos.length > 0 ? (
                               equipos.map((equipo, index) => (
-                                <option
-                                  key={index}
-                                  value={equipo
-                                    .toLowerCase()
-                                    .replace(/\s+/g, "_")}
-                                >
+                                <option key={index} value={equipo}>
                                   {equipo}
                                 </option>
                               ))
