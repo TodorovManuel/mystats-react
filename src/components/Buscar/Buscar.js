@@ -9,7 +9,7 @@ const Buscar = () => {
 
   // Función para obtener datos según el filtro seleccionado
   // Cambia la línea dentro de fetchPartidos
-  const fetchPartidos = async (url) => {
+  /*const fetchPartidos = async (url) => {
     try {
       const response = await fetch(url);
       const data = await response.json();
@@ -26,6 +26,42 @@ const Buscar = () => {
     } catch (error) {
       console.error("Error fetching partidos:", error);
       setPartidos([]); // En caso de error, establece un array vacío
+    }
+  };*/
+  const fetchPartidos = async (url) => {
+    try {
+      // Obtener el token de autenticación (puede estar en localStorage, sessionStorage, o en el estado)
+      const token = localStorage.getItem("token"); // Ajusta esto según cómo manejes tu token
+
+      // Verificar si el token existe
+      if (!token) {
+        console.error("No se proporcionó el token de autenticación");
+        return; // Salir de la función si no hay token
+      }
+
+      // Configuración de la solicitud con las cabeceras, incluyendo el token
+      const response = await fetch(url, {
+        method: "GET", // O el método HTTP que estés usando
+        headers: {
+          Authorization: `Bearer ${token}`, // Pasar el token en la cabecera Authorization
+          "Content-Type": "application/json", // Dependiendo del tipo de contenido que manejes
+        },
+      });
+
+      const data = await response.json();
+
+      // Verificar la respuesta
+      if (Array.isArray(data.partidos)) {
+        setPartidos(data.partidos);
+      } else {
+        console.error("La respuesta no contiene un array en 'partidos':", data);
+        setPartidos([]); // Si no hay datos, establecer un array vacío
+      }
+
+      setCurrentPage(1); // Reiniciar la página a la primera
+    } catch (error) {
+      console.error("Error al obtener los partidos:", error);
+      setPartidos([]); // Si ocurre un error, establecer un array vacío
     }
   };
 
@@ -76,11 +112,13 @@ const Buscar = () => {
       <div className="partidosContainer">
         {currentItems.map((partido) => (
           <div key={partido.id} className="partidoItem">
-            <p>Valoración: {partido.valoracion}</p>
+            <p>{partido.id}</p>
             <p>Minutos: {partido.minutos}</p>
             <p>Puntos: {partido.puntos}</p>
             <p>Asistencias: {partido.asistencias}</p>
             <p>Rebotes: {partido.rebotes}</p>
+            <p>Valoración: {partido.valoracion}</p>
+            <br></br>
           </div>
         ))}
       </div>

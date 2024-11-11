@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import NavBar from '../NavBar/NavBar';
-import './stats.css';
+import NavBar from "../NavBar/NavBar";
+import "./stats.css";
 
 const Stats = () => {
   const [promedio, setPromedio] = useState({
@@ -26,65 +26,88 @@ const Stats = () => {
       tirosDeTresConvertidos: 0,
       tirosLibres: 0,
       tirosLibresConvertidos: 0,
-    }
+    },
   });
   const [datosUser, setDatosUser] = useState({
-    nombre: '',
-    apellido: '',
-    fechaNacimiento: '',
-    club: '',
-    dorsal : '',
-    altura: '',
-    peso: ''
-    });
+    nombre: "",
+    apellido: "",
+    fechaNacimiento: "",
+    club: "",
+    dorsal: "",
+    altura: "",
+    peso: "",
+  });
+
+  const [cantPartidos, setCantPartidos] = useState(0);
 
   useEffect(() => {
-    const token = localStorage.getItem('token'); // Obtener el token JWT desde localStorage
-
-    fetch('http://localhost:3000/api/usuarios/promedio', {
-      method: 'GET',
+    const token = localStorage.getItem("token"); // Obtener el token JWT desde localStorage
+    fetch("http://localhost:3000/api/usuarios/cantidadPartidos", {
+      method: "GET",
       headers: {
-        'Authorization': `Bearer ${token}`, // Incluir el token en el encabezado
-        'Content-Type': 'application/json'
-      }
+        Authorization: `Bearer ${token}`, // Incluir el token en el encabezado
+        "Content-Type": "application/json",
+      },
     })
-      .then(response => {
+      .then((response) => {
         if (!response.ok) {
-          throw new Error('No autorizado');
+          throw new Error("No autorizado");
         }
         return response.json();
       })
-      .then(data => {
-        setPromedio(data.promedio);
+      .then((data) => {
+        console.log("Cantidad de partidos", data.partidos);
+        setCantPartidos(data.partidos);
       })
-      .catch(error => console.error('Error fetching data:', error));
+      .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
-    useEffect(() => {
-        const token = localStorage.getItem('token'); // Obtener el token JWT desde localStorage
+  useEffect(() => {
+    const token = localStorage.getItem("token"); // Obtener el token JWT desde localStorage
 
-        fetch('http://localhost:3000/api/usuarios/traerDatos', {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${token}`, // Incluir el token en el encabezado
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('No autorizado');
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log(data.datos);
-                setDatosUser(data.datos);
-            })
-            .catch(error => console.error('Error fetching data:', error));
-    }
-    , []);
-   // console.log(datosUser.nacimiento.split('T')[0]);
-   // datosUser.nacimiento = datosUser.nacimiento.split('T')[0];
+    fetch("http://localhost:3000/api/usuarios/promedio", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`, // Incluir el token en el encabezado
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("No autorizado");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setPromedio(data.promedio);
+      })
+      .catch((error) => console.error("Error fetching data:", error));
+  }, []);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token"); // Obtener el token JWT desde localStorage
+
+    fetch("http://localhost:3000/api/usuarios/traerDatos", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`, // Incluir el token en el encabezado
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("No autorizado");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data.datos);
+        setDatosUser(data.datos);
+      })
+      .catch((error) => console.error("Error fetching data:", error));
+  }, []);
+  // console.log(datosUser.nacimiento.split('T')[0]);
+  // datosUser.nacimiento = datosUser.nacimiento.split('T')[0];
   return (
     <div>
       <NavBar />
@@ -92,25 +115,46 @@ const Stats = () => {
         <div className="playerContainer">
           <div className="playerText">
             <div className="present">
-              <h1>{datosUser.nombre} {datosUser.apellido}</h1>
-              <form action="/upload" method="post" enctype="multipart/form-data">
+              <h1>
+                {datosUser.nombre} {datosUser.apellido}
+              </h1>
+              <form
+                action="/upload"
+                method="post"
+                enctype="multipart/form-data"
+              >
                 <label htmlFor="imagen">Elige una imagen:</label>
-                <input type="file" id="imagen" name="imagen" accept="image/*"></input>
+                <input
+                  type="file"
+                  id="imagen"
+                  name="imagen"
+                  accept="image/*"
+                ></input>
                 <button type="submit">Subir Imagen</button>
               </form>
             </div>
             <div className="moreDetailCont">
               <div className="ultraDetail">
                 <p>HT/HW: </p>
-                <p>Nacimiento: </p>
+                <p>Nacimiento:</p>
                 <p>Club: </p>
                 <p>Dorsal: </p>
               </div>
               <div className="ultraDetail">
-                <p><b>{datosUser.altura}cm/{datosUser.peso}kg</b></p>
-                <p><b>{datosUser.nacimiento}</b></p>
-                <p><b>{datosUser.club}</b></p>
-                <p><b>{datosUser.dorsal}</b></p>
+                <p>
+                  <b>
+                    {datosUser.altura}cm/{datosUser.peso}kg
+                  </b>
+                </p>
+                <p>
+                  <b>{datosUser.nacimiento} </b>
+                </p>
+                <p>
+                  <b>{datosUser.club}</b>
+                </p>
+                <p>
+                  <b>{datosUser.dorsal}</b>
+                </p>
               </div>
             </div>
           </div>
@@ -120,51 +164,78 @@ const Stats = () => {
           <div className="statsColumn topRow">
             <div>
               <p className="statsDivTitle">Partidos</p>
-              <p className="statsDivInfo">48</p> {/* Actualiza con otra parte del JSON si es necesario */}
+              <p className="statsDivInfo">{cantPartidos}</p>
             </div>
             <div>
               <p className="statsDivTitle">Minutos</p>
-              <p className="statsDivInfo">{promedio.minutosJugados}</p>
+              <p className="statsDivInfo">
+                {promedio.minutosJugados.toFixed(1)}
+              </p>{" "}
+              {/* Redondeado a 1 decimal */}
             </div>
             <div>
               <p className="statsDivTitle">Puntos</p>
-              <p className="statsDivInfo">{promedio.puntos}</p>
+              <p className="statsDivInfo">{promedio.puntos.toFixed(1)}</p>{" "}
+              {/* Redondeado a 1 decimal */}
             </div>
             <div>
               <p className="statsDivTitle">Rebotes</p>
-              <p className="statsDivInfo">{promedio.rebotesOfensivos + promedio.rebotesDefensivos}</p> {/* Suma ambos tipos de rebotes */}
+              <p className="statsDivInfo">
+                {(
+                  promedio.rebotesOfensivos + promedio.rebotesDefensivos
+                ).toFixed(1)}{" "}
+                {/* Suma y redondea a 1 decimal */}
+              </p>
             </div>
             <div>
               <p className="statsDivTitle">Asistencias</p>
-              <p className="statsDivInfo">{promedio.asistencias}</p>
+              <p className="statsDivInfo">
+                {promedio.asistencias.toFixed(1)}
+              </p>{" "}
+              {/* Redondeado a 1 decimal */}
             </div>
           </div>
           <div className="statsColumn lowRow">
             <div>
               <p className="statsDivTitle">Robos</p>
-              <p className="statsDivInfo">{promedio.recuperaciones}</p>
+              <p className="statsDivInfo">
+                {promedio.recuperaciones.toFixed(1)}
+              </p>{" "}
+              {/* Redondeado a 1 decimal */}
             </div>
             <div>
               <p className="statsDivTitle">Pérdidas</p>
-              <p className="statsDivInfo">{promedio.perdidas}</p>
+              <p className="statsDivInfo">
+                {promedio.perdidas.toFixed(1)}
+              </p>{" "}
+              {/* Redondeado a 1 decimal */}
             </div>
             <div>
               <p className="statsDivTitle">Tapones</p>
-              <p className="statsDivInfo">{promedio.taponesCometidos}</p>
+              <p className="statsDivInfo">
+                {promedio.taponesCometidos.toFixed(1)}
+              </p>{" "}
+              {/* Redondeado a 1 decimal */}
             </div>
             <div>
               <p className="statsDivTitle">Faltas</p>
-              <p className="statsDivInfo">{promedio.faltasCometidas}</p>
+              <p className="statsDivInfo">
+                {promedio.faltasCometidas.toFixed(1)}
+              </p>{" "}
+              {/* Redondeado a 1 decimal */}
             </div>
             <div>
               <p className="statsDivTitle">Valoración</p>
-              <p className="statsDivInfo">{promedio.valoracion}</p>
+              <p className="statsDivInfo">
+                {promedio.valoracion.toFixed(1)}
+              </p>{" "}
+              {/* Redondeado a 1 decimal */}
             </div>
           </div>
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default Stats;
