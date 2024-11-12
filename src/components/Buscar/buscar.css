@@ -1,7 +1,18 @@
-
+h1 {
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 50px;
+}
+h2{
+    text-align: center;
+    margin-top: 100px;
+    margin-bottom: 50px;
+}
 .filtrosContainer {
     display: flex;
     justify-content: space-around;
+    margin-top: 50px;
+    margin-bottom: 50px;
 }
 .filtrosContainer button {
     border-radius: 50px;
@@ -11,4 +22,10 @@
 }
 .filtrosContainer button:hover {
     background-color: #f8f9fa;
+}
+.pagination{
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
 }

@@ -79,6 +79,7 @@ const Stats = () => {
         return response.json();
       })
       .then((data) => {
+        console.log(data.promedio);
         setPromedio(data.promedio);
       })
       .catch((error) => console.error("Error fetching data:", error));

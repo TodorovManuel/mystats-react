@@ -6,6 +6,7 @@ const Buscar = () => {
   const [partidos, setPartidos] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
+  const [filtro, setFiltro] = useState("");
 
   // Función para obtener datos según el filtro seleccionado
   // Cambia la línea dentro de fetchPartidos
@@ -28,7 +29,27 @@ const Buscar = () => {
       setPartidos([]); // En caso de error, establece un array vacío
     }
   };*/
-  const fetchPartidos = async (url) => {
+  const fetchPartidos = async (url, numero) => {
+    switch (numero) {
+      case 1:
+        setFiltro("la valoración");
+        break;
+      case 2:
+        setFiltro("los minutos jugados");
+        break;
+      case 3:
+        setFiltro("los puntos anotados");
+        break;
+      case 4:
+        setFiltro("las asistencias hechas");
+        break;
+      case 5:
+        setFiltro("los rebotes tomados");
+        break;
+      default:
+        setFiltro("");
+        break;
+    }
     try {
       // Obtener el token de autenticación (puede estar en localStorage, sessionStorage, o en el estado)
       const token = localStorage.getItem("token"); // Ajusta esto según cómo manejes tu token
@@ -52,6 +73,7 @@ const Buscar = () => {
 
       // Verificar la respuesta
       if (Array.isArray(data.partidos)) {
+        console.log("Partidos:", data.partidos);
         setPartidos(data.partidos);
       } else {
         console.error("La respuesta no contiene un array en 'partidos':", data);
@@ -93,32 +115,38 @@ const Buscar = () => {
       <NavBar />
       <h1>Buscar partido</h1>
       <div className="filtrosContainer">
-        <button onClick={() => fetchPartidos(urls.masValoracion)}>
+        <button onClick={() => fetchPartidos(urls.masValoracion, 1)}>
           Más valoración
         </button>
-        <button onClick={() => fetchPartidos(urls.masMinutos)}>
+        <button onClick={() => fetchPartidos(urls.masMinutos, 2)}>
           Más minutos
         </button>
-        <button onClick={() => fetchPartidos(urls.masPuntos)}>
+        <button onClick={() => fetchPartidos(urls.masPuntos, 3)}>
           Más puntos
         </button>
-        <button onClick={() => fetchPartidos(urls.masAsistencias)}>
+        <button onClick={() => fetchPartidos(urls.masAsistencias, 4)}>
           Más asistencias
         </button>
-        <button onClick={() => fetchPartidos(urls.masRebotes)}>
+        <button onClick={() => fetchPartidos(urls.masRebotes, 5)}>
           Más rebotes
         </button>
       </div>
+      <h2>Filtrando partidos de mayor a menor segun {filtro}</h2>
+
       <div className="partidosContainer">
-        {currentItems.map((partido) => (
+        {currentItems.map((partido, index) => (
           <div key={partido.id} className="partidoItem">
-            <p>{partido.id}</p>
-            <p>Minutos: {partido.minutos}</p>
-            <p>Puntos: {partido.puntos}</p>
-            <p>Asistencias: {partido.asistencias}</p>
-            <p>Rebotes: {partido.rebotes}</p>
-            <p>Valoración: {partido.valoracion}</p>
-            <br></br>
+            <p>{indexOfFirstItem + index + 1})</p>
+            <p>Minutos: {partido.estadisticas.minutosJugados}</p>
+            <p>Puntos: {partido.estadisticas.puntos}</p>
+            <p>Asistencias: {partido.estadisticas.asistencias}</p>
+            <p>
+              Rebotes:{" "}
+              {partido.estadisticas.rebotesDefensivos +
+                partido.estadisticas.rebotesOfensivos}
+            </p>
+            <p>Valoración: {partido.estadisticas.valoracion}</p>
+            <hr></hr>
           </div>
         ))}
       </div>
