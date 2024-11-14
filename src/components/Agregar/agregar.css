@@ -114,3 +114,24 @@ input {
   text-align: center;
   text-decoration: underline #920000;
 }
+select {
+  width: 100%; /* Hace que el select ocupe el 100% del contenedor */
+  padding: 10px; /* Agregamos más padding para que el texto no esté tan pegado a los bordes */
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  box-sizing: border-box; /* Asegura que el padding no afecte el ancho total del select */
+  margin-bottom: 10px; /* Espacio abajo del campo */
+  margin-top: 10px;
+  background-color: white; /* Fondo blanco */
+  font-size: 14px; /* Asegura que la fuente sea legible */
+  cursor: pointer; /* Cambia el cursor al pasar sobre el select */
+}
+
+select:focus {
+  border-color: #007bff; /* Cambia el color del borde cuando el select está en foco */
+  outline: none; /* Elimina el contorno predeterminado en el enfoque */
+}
+
+select option {
+  padding: 10px; /* Asegura que las opciones tengan suficiente espacio */
+}

@@ -5,7 +5,7 @@ import "./buscar.css";
 const Buscar = () => {
   const [partidos, setPartidos] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
+  const itemsPerPage = 9;
   const [filtro, setFiltro] = useState("");
 
   // Función para obtener datos según el filtro seleccionado
@@ -30,6 +30,7 @@ const Buscar = () => {
     }
   };*/
   const fetchPartidos = async (url, numero) => {
+    url = url+"/"+{currentPage};
     switch (numero) {
       case 1:
         setFiltro("la valoración");
@@ -114,6 +115,7 @@ const Buscar = () => {
     <div>
       <NavBar />
       <h1>Buscar partido</h1>
+
       <div className="filtrosContainer">
         <button onClick={() => fetchPartidos(urls.masValoracion, 1)}>
           Más valoración
@@ -131,12 +133,13 @@ const Buscar = () => {
           Más rebotes
         </button>
       </div>
-      <h2>Filtrando partidos de mayor a menor segun {filtro}</h2>
+
+      <h2>Filtrando partidos de mayor a menor según {filtro}</h2>
 
       <div className="partidosContainer">
         {currentItems.map((partido, index) => (
           <div key={partido.id} className="partidoItem">
-            <p>{indexOfFirstItem + index + 1})</p>
+            <p>{indexOfFirstItem + index + 1}</p>
             <p>Minutos: {partido.estadisticas.minutosJugados}</p>
             <p>Puntos: {partido.estadisticas.puntos}</p>
             <p>Asistencias: {partido.estadisticas.asistencias}</p>
@@ -146,21 +149,24 @@ const Buscar = () => {
                 partido.estadisticas.rebotesOfensivos}
             </p>
             <p>Valoración: {partido.estadisticas.valoracion}</p>
-            <hr></hr>
+            <hr />
           </div>
         ))}
       </div>
+
       <div className="pagination">
         <button
+          className="pagination-btn"
           onClick={() => goToPage(currentPage - 1)}
           disabled={currentPage === 1}
         >
           Anterior
         </button>
-        <span>
+        <span className="pagination-info">
           Página {currentPage} de {totalPages}
         </span>
         <button
+          className="pagination-btn"
           onClick={() => goToPage(currentPage + 1)}
           disabled={currentPage === totalPages}
         >

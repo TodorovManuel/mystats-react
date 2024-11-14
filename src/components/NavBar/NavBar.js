@@ -173,6 +173,7 @@ const Navbar = () => {
             if (data.length !== 0) {
               nuevosEquipos = data.federaciones;
               console.log("Equipos:", nuevosEquipos);
+              
               completarActualizacion(nuevosEquipos, federacionSeleccionada);
             } else {
               console.error("Error en la solicitud, equipos no recibidos");
