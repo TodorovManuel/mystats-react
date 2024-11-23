@@ -30,7 +30,8 @@ const Buscar = () => {
     }
   };*/
   const fetchPartidos = async (url, numero) => {
-    url = url+"/"+{currentPage};
+    url = url+"/"+currentPage;
+    console.log(url);
     switch (numero) {
       case 1:
         setFiltro("la valoración");
