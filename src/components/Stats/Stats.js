@@ -1,6 +1,33 @@
 import React, { useState, useEffect } from "react";
 import NavBar from "../NavBar/NavBar";
 import "./stats.css";
+// Importaciones para Chart.js
+import { Bar, Pie, Line } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  ArcElement,
+  Tooltip,
+  Legend,
+  Title,
+  LineElement,
+  PointElement,
+} from "chart.js";
+
+// Configuración para habilitar gráficos en Chart.js
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  ArcElement,
+  Tooltip,
+  Legend,
+  Title,
+  LineElement,
+  PointElement
+);
 
 const Stats = () => {
   const [promedio, setPromedio] = useState({
@@ -235,6 +262,76 @@ const Stats = () => {
           </div>
         </div>
       </div>
+      <div className="charts">
+  <div className="chart">
+    <h2>Promedio por partido</h2>
+    <Bar
+      data={{
+        labels: ["Puntos", "Rebotes", "Asistencias", "Robos", "Pérdidas"],
+        datasets: [
+          {
+            label: "Promedio por partido",
+            data: [
+              promedio.puntos,
+              promedio.rebotesOfensivos + promedio.rebotesDefensivos,
+              promedio.asistencias,
+              promedio.recuperaciones,
+              promedio.perdidas,
+            ],
+            backgroundColor: [
+              "#FF6384",
+              "#36A2EB",
+              "#FFCE56",
+              "#4BC0C0",
+              "#9966FF",
+            ],
+          },
+        ],
+      }}
+    />
+  </div>
+  <div className="chart">
+    <h2>Eficiencia de tiros</h2>
+    <Pie
+      data={{
+        labels: ["Tiros de Campo", "Tiros de 2", "Tiros de 3", "Tiros Libres"],
+        datasets: [
+          {
+            label: "Eficiencia de tiros",
+            data: [
+              promedio.tiros.tirosDeCampoConvertidos,
+              promedio.tiros.tirosDeDosConvertidos,
+              promedio.tiros.tirosDeTresConvertidos,
+              promedio.tiros.tirosLibresConvertidos,
+            ],
+            backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0"],
+          },
+        ],
+      }}
+    />
+  </div>
+  <div className="chart">
+    <h2>Tendencia</h2>
+    <Line
+      data={{
+        labels: ["Minutos", "Puntos", "Valoración"],
+        datasets: [
+          {
+            label: "Tendencia de estadísticas",
+            data: [
+              promedio.minutosJugados,
+              promedio.puntos,
+              promedio.valoracion,
+            ],
+            borderColor: "#FF6384",
+            backgroundColor: "rgba(255, 99, 132, 0.5)",
+            tension: 0.2,
+          },
+        ],
+      }}
+    />
+  </div>
+</div>
     </div>
   );
 };
