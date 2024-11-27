@@ -69,6 +69,7 @@ const Stats = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token"); // Obtener el token JWT desde localStorage
+    console.log("Entro a cantidad partidos");
     fetch("http://localhost:3000/api/usuarios/cantidadPartidos", {
       method: "GET",
       headers: {
@@ -91,7 +92,8 @@ const Stats = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token"); // Obtener el token JWT desde localStorage
-
+    console.log("Entro a promedio");
+    console.log(token);
     fetch("http://localhost:3000/api/usuarios/promedio", {
       method: "GET",
       headers: {

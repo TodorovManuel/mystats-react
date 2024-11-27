@@ -22,6 +22,7 @@ const Navbar = () => {
   };
 
   const openPopUpLogin = () => {
+    console.log("ABRIENDO VENTANA DE LOGIN");
     setPopUpOpenLogin(true);
   };
 
@@ -118,6 +119,8 @@ const Navbar = () => {
   const [emailLogin, setEmailLogin] = useState("");
   const [passwordLogin, setPasswordLogin] = useState("");
   const handleSubmitLog = async (event) => {
+    console.log("LOGEANDO USUARIO");
+
     event.preventDefault();
 
     const data = {
@@ -128,6 +131,7 @@ const Navbar = () => {
     };
 
     try {
+      console.log("LOGEANDO USUARIO");
       const response = await fetch("http://localhost:3000/api/usuarios/login", {
         method: "POST",
         headers: {
@@ -173,7 +177,7 @@ const Navbar = () => {
             if (data.length !== 0) {
               nuevosEquipos = data.federaciones;
               console.log("Equipos:", nuevosEquipos);
-              
+
               completarActualizacion(nuevosEquipos, federacionSeleccionada);
             } else {
               console.error("Error en la solicitud, equipos no recibidos");
@@ -287,24 +291,26 @@ const Navbar = () => {
                         type="email"
                         placeholder="Correo"
                         value={emailLogin}
-                        onChange={(e) => setEmailLogin(e.target.value)} // Actualizar el estado al cambiar el valor
+                        onChange={(e) => setEmailLogin(e.target.value)}
                       />
                       <label>Contraseña</label>
                       <input
                         type="password"
                         placeholder="Contraseña"
                         value={passwordLogin}
-                        onChange={(e) => setPasswordLogin(e.target.value)} // Actualizar el estado al cambiar el valor
+                        onChange={(e) => setPasswordLogin(e.target.value)}
                       />
                       <div className="formBtnContainer">
-                        <button
-                          onClick={closePopUpLogin}
-                          className="finishBtn"
-                          type="submit"
-                        >
+                        {/* Botón para enviar el formulario */}
+                        <button className="finishBtn" type="submit">
                           Login
                         </button>
-                        <button className="cerrarBtn" onClick={closePopUpLogin}>
+                        {/* Botón para cerrar el popup */}
+                        <button
+                          className="cerrarBtn"
+                          type="button"
+                          onClick={closePopUpLogin}
+                        >
                           <img
                             width="50"
                             height="50"
@@ -318,6 +324,7 @@ const Navbar = () => {
                 </div>
               )}
             </li>
+
             <li>
               <button onClick={openPopUpRegistro} id="registrarBtn">
                 Registrarme
