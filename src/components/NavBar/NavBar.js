@@ -276,6 +276,9 @@ const Navbar = () => {
             <li>
               <NavLink to="/stats">Stats</NavLink>
             </li>
+            <li>
+              <NavLink to="/borrar">Borrar</NavLink>
+            </li>
 
             <li>
               <button onClick={openPopUpLogin} id="iniciarBtn">

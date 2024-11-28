@@ -265,75 +265,147 @@ const Stats = () => {
         </div>
       </div>
       <div className="charts">
-  <div className="chart">
-    <h2>Promedio por partido</h2>
-    <Bar
-      data={{
-        labels: ["Puntos", "Rebotes", "Asistencias", "Robos", "Pérdidas"],
-        datasets: [
-          {
-            label: "Promedio por partido",
-            data: [
-              promedio.puntos,
-              promedio.rebotesOfensivos + promedio.rebotesDefensivos,
-              promedio.asistencias,
-              promedio.recuperaciones,
-              promedio.perdidas,
-            ],
-            backgroundColor: [
-              "#FF6384",
-              "#36A2EB",
-              "#FFCE56",
-              "#4BC0C0",
-              "#9966FF",
-            ],
-          },
-        ],
-      }}
-    />
-  </div>
-  <div className="chart">
-    <h2>Eficiencia de tiros</h2>
-    <Pie
-      data={{
-        labels: ["Tiros de Campo", "Tiros de 2", "Tiros de 3", "Tiros Libres"],
-        datasets: [
-          {
-            label: "Eficiencia de tiros",
-            data: [
-              promedio.tiros.tirosDeCampoConvertidos,
-              promedio.tiros.tirosDeDosConvertidos,
-              promedio.tiros.tirosDeTresConvertidos,
-              promedio.tiros.tirosLibresConvertidos,
-            ],
-            backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0"],
-          },
-        ],
-      }}
-    />
-  </div>
-  <div className="chart">
-    <h2>Tendencia</h2>
-    <Line
-      data={{
-        labels: ["Minutos", "Puntos", "Valoración"],
-        datasets: [
-          {
-            label: "Tendencia de estadísticas",
-            data: [
-              promedio.minutosJugados,
-              promedio.puntos,
-              promedio.valoracion,
-            ],
-            borderColor: "#FF6384",
-            backgroundColor: "rgba(255, 99, 132, 0.5)",
-            tension: 0.2,
-          },
-        ],
-      }}
-    />
-  </div>
-</div>
+        {/* Gráfico de Promedio por Partido */}
+        <div className="chart">
+          <h2>Promedio por partido</h2>
+          <Bar
+            data={{
+              labels: ["Puntos", "Rebotes", "Asistencias", "Robos", "Pérdidas"],
+              datasets: [
+                {
+                  label: "Promedio por partido",
+                  data: [
+                    promedio.puntos,
+                    promedio.rebotesOfensivos + promedio.rebotesDefensivos,
+                    promedio.asistencias,
+                    promedio.recuperaciones,
+                    promedio.perdidas,
+                  ],
+                  backgroundColor: [
+                    "#FF6384", // Puntos
+                    "#36A2EB", // Rebotes
+                    "#FFCE56", // Asistencias
+                    "#4BC0C0", // Robos
+                    "#9966FF", // Pérdidas
+                  ],
+                  borderColor: [
+                    "#FF6384", // Puntos
+                    "#36A2EB", // Rebotes
+                    "#FFCE56", // Asistencias
+                    "#4BC0C0", // Robos
+                    "#9966FF", // Pérdidas
+                  ],
+                  borderWidth: 1,
+                },
+              ],
+            }}
+            options={{
+              responsive: true,
+              plugins: {
+                legend: {
+                  position: "top",
+                },
+                title: {
+                  display: true,
+                  text: "Promedio por Partido",
+                },
+              },
+              scales: {
+                y: {
+                  beginAtZero: true,
+                  title: {
+                    display: true,
+                    text: "Valor Promedio",
+                  },
+                },
+              },
+            }}
+          />
+        </div>
+
+        {/* Gráfico de Distribución de los Tiros */}
+        <div className="chart">
+          <h2>Distribución de los Tiros Convertidos</h2>
+          <Pie
+            data={{
+              labels: [
+                /*"Tiros de Campo",*/
+                "Tiros de 2",
+                "Tiros de 3",
+                "Tiros Libres",
+              ],
+              datasets: [
+                {
+                  label: "Tiros Convertidos",
+                  data: [
+                    /*promedio.tiros.tirosDeCampoConvertidos,*/
+                    promedio.tiros.tirosDeDosConvertidos,
+                    promedio.tiros.tirosDeTresConvertidos,
+                    promedio.tiros.tirosLibresConvertidos,
+                  ],
+                  backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0"],
+                },
+              ],
+            }}
+            options={{
+              responsive: true,
+              plugins: {
+                legend: {
+                  position: "top",
+                },
+                title: {
+                  display: true,
+                  text: "Distribución de Tiros Convertidos",
+                },
+              },
+            }}
+          />
+        </div>
+
+        {/* Gráfico de Tendencia */}
+        <div className="chart">
+          <h2>Tendencia de rendimiento</h2>
+          <Line
+            data={{
+              labels: ["Minutos", "Puntos", "Valoración"],
+              datasets: [
+                {
+                  label: "Tendencia de estadísticas",
+                  data: [
+                    promedio.minutosJugados,
+                    promedio.puntos,
+                    promedio.valoracion,
+                  ],
+                  borderColor: "#FF6384", // Color de la línea
+                  backgroundColor: "rgba(255, 99, 132, 0.2)", // Fondo de la línea
+                  tension: 0.4, // Curvatura de la línea
+                },
+              ],
+            }}
+            options={{
+              responsive: true,
+              plugins: {
+                legend: {
+                  position: "top",
+                },
+                title: {
+                  display: true,
+                  text: "Tendencia de Rendimiento",
+                },
+              },
+              scales: {
+                y: {
+                  beginAtZero: true,
+                  title: {
+                    display: true,
+                    text: "Valor de la Estadística",
+                  },
+                },
+              },
+            }}
+          />
+        </div>
+      </div>
     </div>
   );
 };
